@@ -1,0 +1,36 @@
+﻿@page "/exampleslist"
+
+@inject IExampleService ExampleService
+@attribute [StreamRendering(true)] 
+
+<h3>Example List</h3>
+
+@if(examples is null)
+{
+    <span> Loading... </span>
+}
+else if(examples.Count == 0)
+{
+    <span> No Examples... </span>
+}
+
+else{
+    <ul>
+        @foreach(var example in examples)
+        {
+            <li>@example.Name <EditExampleButton Id="example.Id"/> </li>
+        }
+    </ul>    
+}
+
+<CreateExampleButton/>
+
+@code {
+    List<Example>? examples = null;
+
+    protected override async Task OnInitializedAsync(){
+        examples = await ExampleService.GetAllExamples();
+    }
+}
+
+

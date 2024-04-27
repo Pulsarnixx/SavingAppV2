@@ -1,0 +1,13 @@
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer 
+
+
+@* Tutaj bootstrap btn btn...*@
+<button @onclick="CreateExample" class="btn btn-primary">Create Example</button>
+
+@code{
+
+     void CreateExample(){
+        NavigationManager.NavigateTo("/editexample");
+    }
+}
