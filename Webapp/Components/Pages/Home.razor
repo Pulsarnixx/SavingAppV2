@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject ISavingService SavingService
+@inject NavigationManager uriHelper
 @attribute [StreamRendering(false)] 
 @rendermode InteractiveServer
 
@@ -25,29 +26,41 @@ else{
             <RadzenDataGridColumn TItem="SavingEntity" Property="Amount" Title="Amount" />
             <RadzenDataGridColumn TItem="SavingEntity" Property="Date" Title="Date">
                 <Template Context="saving">@saving.Date.ToShortDateString()</Template>
-
+           </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="SavingEntity">
+            <Template Context="saving">
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" 
+                Size="ButtonSize.Medium" Click="@(args => EditRow(saving))" @onclick:stopPropagation="true">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" 
+                Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" 
+                class="my-1 ms-1" Click="@(args => DeleteRow(saving))" @onclick:stopPropagation="true" />
+            </Template>
             </RadzenDataGridColumn>
-             @* <RadzenDataGridColumn>
-                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick="EditRow">
-                </RadzenButton>
-                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" @onclick="DeleteRow">
-                </RadzenButton>
-                <RadzenButton Variant="Variant.Flat" Click=@EditRow() Text="Primary" ButtonStyle="ButtonStyle.Primary" />
-            </RadzenDataGridColumn> *@
+
         </Columns>
     </RadzenDataGrid>
 
-    <CreateSavingButton/>
 }
 
 <CreateSavingButton/>
 
 
 @code {
+
+    [Parameter]
+    public int? Id { get; set; }
+    [Parameter]
+    public EventCallback OnOdswiez { get; set; }
     List<SavingEntity>? savings = null;
 
     protected override async Task OnInitializedAsync(){
         savings = await SavingService.GetAllExamples();
+    }
+
+    void NevigateToYourUrl()
+    {
+        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
     }
 
 
@@ -61,12 +74,15 @@ else{
             args.Grid.Sorts.Add(new SortDescriptor() { Property = "Date", SortOrder = SortOrder.Ascending });
         }
     }
-
-     void EditRow()
+    async Task EditRow(SavingEntity saving)
     {
-        Console.WriteLine("Edit");
+        await SavingService.EditSaving(saving.Id, saving);
     }
-    void DeleteRow() {
-        Console.WriteLine("Delete");
+    @* TODO: ZMIENIC TO W PRZYSZLOSCI *@
+    async Task DeleteRow(SavingEntity saving) {
+        
+        await SavingService.DeleteSaving(saving.Id);
+        NevigateToYourUrl();
+
     }
 }

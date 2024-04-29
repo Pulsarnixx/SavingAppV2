@@ -67,12 +67,12 @@ else{
     public int? Id { get; set; }
     SavingEntity saiving { get; set; } = new();
            
-
     async Task HandleSubmit()
     {
         await SavingService.AddExample(saiving);
 
         message = $"Correct";
+
     }
 
  
