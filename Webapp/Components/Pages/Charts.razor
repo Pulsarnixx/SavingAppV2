@@ -1,0 +1,49 @@
+﻿@page "/charts"
+@inject ISavingService SavingService
+@attribute [StreamRendering(false)] 
+@rendermode InteractiveServer
+
+<PageTitle>Charts</PageTitle>
+
+<h1>Savings Charts</h1>
+
+@if (savings == null) {
+    <p><em>Loading...</em></p>
+}
+else if (savings.Count == 0) {
+    <p><em>No savings...</em></p>
+}
+else {
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 my-5">
+                <RadzenCard class="w-100 mb-4" Style="diplay: flex; align-items: center; gap: 0.5rem">
+                    <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                    <RadzenLabel Text="Smooth" Component="smooth" Style="margin-right: 1rem;"/>
+                    <RadzenCheckBox @bind-Value="@showDataLabels" Name="dataLabels"></RadzenCheckBox>
+                    <RadzenLabel Text="Show Data Labels" Component="dataLabels" Style="margin-right: 1rem;" />
+                    <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
+                    <RadzenLabel Text="Show Markers" Component="markers" />
+                </RadzenCard>
+                <RadzenChart>
+                    <RadzenLineSeries Smooth="smooth" Data="@savings" CategoryProperty="Date" Title="Savings" LineType="LineType.Solid" ValueProperty="Amount">
+                        <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                        <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                    </RadzenLineSeries>
+                </RadzenChart>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    List<SavingEntity>? savings = null;
+
+    bool smooth = false;
+    bool showDataLabels = false;
+    bool showMarkers = false;
+
+    protected override async Task OnInitializedAsync(){
+        savings = await SavingService.GetAllExamples();
+    }
+}

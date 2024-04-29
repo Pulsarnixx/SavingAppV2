@@ -14,6 +14,7 @@
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+    <PackageReference Include="Radzen.Blazor" Version="4.30.2" />
     <ProjectReference Include="..\Webapp.Client\Webapp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
   </ItemGroup>

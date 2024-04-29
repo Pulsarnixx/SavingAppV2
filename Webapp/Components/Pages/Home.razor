@@ -1,7 +1,8 @@
 ﻿@page "/"
 
 @inject ISavingService SavingService
-@attribute [StreamRendering(true)] 
+@attribute [StreamRendering(false)] 
+@rendermode InteractiveServer
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -17,27 +18,16 @@ else if(savings.Count == 0)
 }
 
 else{
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var saving in savings)
-        {
-            <tr>
-                <td>@saving.Name</td>
-                <td>@saving.Category</td>
-                <td>@saving.Amount</td>
-                <td>@saving.Date.ToString("dd.MM.yyyy")</td>
-            </tr>
-        }
-    </tbody>
-</table> 
+    <RadzenDataGrid Data="@savings" TItem="SavingEntity">
+        <Columns>
+            <RadzenDataGridColumn TItem="SavingEntity" Property="Name" Title="Name" />
+            <RadzenDataGridColumn TItem="SavingEntity" Property="Category" Title="Category" />
+            <RadzenDataGridColumn TItem="SavingEntity" Property="Amount" Title="Amount" />
+            <RadzenDataGridColumn TItem="SavingEntity" Property="Date" Title="Date">
+                <Template Context="saving">@saving.Date.ToShortDateString()</Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 }
 
 <CreateSavingButton/>
