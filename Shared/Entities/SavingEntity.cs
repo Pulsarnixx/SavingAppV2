@@ -4,9 +4,11 @@ namespace Webapp.Shared.Entities
     {
         public int Id { get; set; }
         public int SavingTypeId { get; set; }
+        public SavingType? SavingType { get; set; }
         public required string Name { get; set; }
         public decimal Amount { get; set; }
-        public required DateTime AddingDate { get; set; }
+        public required DateTime Date { get; set; }
+
 
     }
 }

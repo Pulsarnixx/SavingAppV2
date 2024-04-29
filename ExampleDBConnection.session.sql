@@ -27,3 +27,9 @@ INSERT INTO Savings (SavingsTypeId, Name, Amount, AddingDate) VALUES
 (1, 'Emergency Fund', 1000.00, '2024-04-28'),
 (2, '401(k)', 5000.00, '2024-04-28'),
 (3, 'Dream Vacation', 2500.00, '2024-04-28');
+
+--@block
+USE SavingsDB;
+DROP TABLE Savings;
+DROP TABLE SavingsType;
+DROP DATABASE SavingsDB;
