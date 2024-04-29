@@ -26,6 +26,13 @@ else{
             <RadzenDataGridColumn TItem="SavingEntity" Property="Date" Title="Date">
                 <Template Context="saving">@saving.Date.ToShortDateString()</Template>
             </RadzenDataGridColumn>
+            @* <RadzenDataGridColumn>
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick="EditRow">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" @onclick="DeleteRow">
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Flat" Click=@EditRow() Text="Primary" ButtonStyle="ButtonStyle.Primary" />
+            </RadzenDataGridColumn> *@
         </Columns>
     </RadzenDataGrid>
 }
@@ -40,6 +47,8 @@ else{
         savings = await SavingService.GetAllExamples();
     }
 
+    DataGridEditMode editMode = DataGridEditMode.Single;
+
     void OnRender(DataGridRenderEventArgs<SavingEntity> args)
     {
         if (args.FirstRender)
@@ -48,5 +57,13 @@ else{
             args.Grid.Sorts.Add(new SortDescriptor() { Property = "Amount", SortOrder = SortOrder.Ascending });
             args.Grid.Sorts.Add(new SortDescriptor() { Property = "Date", SortOrder = SortOrder.Ascending });
         }
+    }
+
+    void EditRow()
+    {
+        Console.WriteLine("Edit");
+    }
+    void DeleteRow() {
+        Console.WriteLine("Delete");
     }
 }
