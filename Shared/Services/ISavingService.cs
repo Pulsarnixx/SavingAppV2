@@ -6,6 +6,7 @@ namespace Webapp.Shared.Services
     {
         public Task<List<SavingEntity>> GetAllExamples();
         public Task<SavingEntity> AddExample(SavingEntity saving);
+        public Task<List<SavingEntity>> GetByCategory(SavingCategory category);
 
         // public Task<Example> GetExampleById(int id);
 

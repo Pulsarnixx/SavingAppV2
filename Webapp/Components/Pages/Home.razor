@@ -18,7 +18,7 @@ else if(savings.Count == 0)
 }
 
 else{
-    <RadzenDataGrid Data="@savings" TItem="SavingEntity">
+    <RadzenDataGrid Render="@OnRender" AllowMultiColumnSorting="true" ShowMultiColumnSortingIndex="true" AllowPaging="true" AllowSorting="true" Data="@savings" TItem="SavingEntity">
         <Columns>
             <RadzenDataGridColumn TItem="SavingEntity" Property="Name" Title="Name" />
             <RadzenDataGridColumn TItem="SavingEntity" Property="Category" Title="Category" />
@@ -38,5 +38,15 @@ else{
 
     protected override async Task OnInitializedAsync(){
         savings = await SavingService.GetAllExamples();
+    }
+
+    void OnRender(DataGridRenderEventArgs<SavingEntity> args)
+    {
+        if (args.FirstRender)
+        {
+            args.Grid.Sorts.Add(new SortDescriptor() { Property = "Category", SortOrder = SortOrder.Ascending });
+            args.Grid.Sorts.Add(new SortDescriptor() { Property = "Amount", SortOrder = SortOrder.Ascending });
+            args.Grid.Sorts.Add(new SortDescriptor() { Property = "Date", SortOrder = SortOrder.Ascending });
+        }
     }
 }

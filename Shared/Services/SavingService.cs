@@ -39,6 +39,9 @@ namespace Webapp.Shared.Services
             return saving;
         }
 
-
+        public async Task<List<SavingEntity>> GetByCategory(SavingCategory category)
+        {
+            return await _context.Savings.Where(saving => saving.Category == category).ToListAsync();
+        }
     }
 }

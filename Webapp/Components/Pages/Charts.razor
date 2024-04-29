@@ -6,50 +6,83 @@
 
 <PageTitle>Charts</PageTitle>
 
-<h1>Savings Charts</h1>
+<center><h1>Charts</h1></center>
 
-@if (savings == null) {
+@if (overall == null) {
     <p><em>Loading...</em></p>
 }
-else if (savings.Count == 0) {
-    <p><em>No savings...</em></p>
+else if (overall.Count == 0) {
+    <p><em>Nothing to display</em></p>
 }
 else {
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 my-5">
-                <RadzenCard class="w-100 mb-4" Style="diplay: flex; align-items: center; gap: 0.5rem">
-                    <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
-                    <RadzenLabel Text="Smooth" Component="smooth" Style="margin-right: 1rem;"/>
-                    <RadzenCheckBox @bind-Value="@showDataLabels" Name="dataLabels"></RadzenCheckBox>
-                    <RadzenLabel Text="Show Data Labels" Component="dataLabels" Style="margin-right: 1rem;" />
-                    <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
-                    <RadzenLabel Text="Show Markers" Component="markers" />
-                    <RadzenCheckBox @bind-Value="@grid" Name="markers"></RadzenCheckBox>
-                    <RadzenLabel Text="Show Grid" Component="markers" />
-                </RadzenCard>
-                <RadzenChart>
-                    <RadzenLineSeries Smooth="smooth" Data="@savings" CategoryProperty="Date" Title="Savings" LineType="LineType.Solid" ValueProperty="Amount">
-                        <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
-                        <RadzenSeriesDataLabels Visible="@showDataLabels" />
-                    </RadzenLineSeries>
-                    <RadzenValueAxis Formatter="@FormatAsPLN">
-                        <RadzenGridLines Visible="@grid" />
-                        <RadzenAxisTitle Text="Revenue in USD" />
-                    </RadzenValueAxis>
-                </RadzenChart>
+    <center>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 my-5">
+                    <RadzenCard class="w-100 mb-4" Style="diplay: flex; align-items: center; gap: 0.5rem">
+                        <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                            <RadzenLabel Text="Smooth" Component="smooth" Style="margin-right: 1rem;"/>
+                        <RadzenCheckBox @bind-Value="@showDataLabels" Name="dataLabels"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Data Labels" Component="dataLabels" Style="margin-right: 1rem;" />
+                        <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Markers" Component="markers" />
+                        <RadzenCheckBox @bind-Value="@grid" Name="grid"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Grid" Component="grid" />
+                    </RadzenCard>
+                    <RadzenCard class="w-100 mb-4" Style="diplay: flex; align-items: center; gap: 0.5rem">
+                        <RadzenCheckBox @bind-Value="@overallOn" Name="overall"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Overall" Component="overall" Style="margin-right: 1rem;"/>
+                        <RadzenCheckBox @bind-Value="@incomeOn" Name="income"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Income" Component="income" Style="margin-right: 1rem;" />
+                        <RadzenCheckBox @bind-Value="@savingsOn" Name="savings"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Savings" Component="savings" />
+                        <RadzenCheckBox @bind-Value="@otherOn" Name="other"></RadzenCheckBox>
+                            <RadzenLabel Text="Show Other" Component="other" />
+                    </RadzenCard>
+                    <RadzenChart>
+                        <RadzenLineSeries Visible="@overallOn" Smooth="smooth" Data="@overall" CategoryProperty="Date" Title="Overall" LineType="LineType.Solid" ValueProperty="Amount">
+                            <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                            <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                        </RadzenLineSeries>
+                        <RadzenLineSeries Visible="@incomeOn" Smooth="smooth" Data="@income" CategoryProperty="Date" Title="Income" LineType="LineType.Solid" ValueProperty="Amount">
+                            <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                            <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                        </RadzenLineSeries>
+                        <RadzenLineSeries Visible="@savingsOn" Smooth="smooth" Data="@savings" CategoryProperty="Date" Title="Savings" LineType="LineType.Solid" ValueProperty="Amount">
+                            <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                            <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                        </RadzenLineSeries>
+                        <RadzenLineSeries Visible="@otherOn" Smooth="smooth" Data="@other" CategoryProperty="Date" Title="Other" LineType="LineType.Solid" ValueProperty="Amount">
+                            <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                            <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                        </RadzenLineSeries>
+                        <RadzenValueAxis Formatter="@FormatAsPLN">
+                            <RadzenGridLines Visible="@grid" />
+                            <RadzenAxisTitle Text="PLN" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+                </div>
             </div>
         </div>
-    </div>
+    </center>
 }
 
 @code {
+    List<SavingEntity>? overall = null;
+    List<SavingEntity>? income = null;
     List<SavingEntity>? savings = null;
+    List<SavingEntity>? other = null; 
 
     bool smooth = false;
     bool showDataLabels = false;
     bool showMarkers = false;
     bool grid = false;
+    bool annotation = false;
+
+    bool overallOn = true;
+    bool incomeOn = false;
+    bool savingsOn = false;
+    bool otherOn = false;
 
     string FormatAsPLN(object value)
     {
@@ -57,6 +90,9 @@ else {
     }
 
     protected override async Task OnInitializedAsync(){
-        savings = await SavingService.GetAllExamples();
+        overall = await SavingService.GetAllExamples();
+        income = await SavingService.GetByCategory(SavingCategory.Income);
+        savings = await SavingService.GetByCategory(SavingCategory.Savings);
+        other = await SavingService.GetByCategory(SavingCategory.Other);
     }
 }
