@@ -53,7 +53,7 @@ namespace Shared.Migrations
                             Id = 1,
                             Amount = 12.00m,
                             Category = 0,
-                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1530),
+                            Date = new DateTime(2024, 4, 29, 15, 36, 0, 418, DateTimeKind.Local).AddTicks(6860),
                             Name = "Bułki"
                         },
                         new
@@ -61,7 +61,7 @@ namespace Shared.Migrations
                             Id = 2,
                             Amount = 5.00m,
                             Category = 1,
-                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1579),
+                            Date = new DateTime(2024, 4, 29, 16, 6, 0, 418, DateTimeKind.Local).AddTicks(6890),
                             Name = "Mydło"
                         },
                         new
@@ -69,7 +69,7 @@ namespace Shared.Migrations
                             Id = 3,
                             Amount = 1.00m,
                             Category = 2,
-                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1582),
+                            Date = new DateTime(2024, 4, 29, 16, 36, 0, 418, DateTimeKind.Local).AddTicks(6890),
                             Name = "Plecak"
                         });
                 });

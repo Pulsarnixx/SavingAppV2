@@ -2,6 +2,7 @@
 @inject ISavingService SavingService
 @attribute [StreamRendering(false)] 
 @rendermode InteractiveServer
+@using System.Globalization
 
 <PageTitle>Charts</PageTitle>
 
@@ -24,12 +25,18 @@ else {
                     <RadzenLabel Text="Show Data Labels" Component="dataLabels" Style="margin-right: 1rem;" />
                     <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
                     <RadzenLabel Text="Show Markers" Component="markers" />
+                    <RadzenCheckBox @bind-Value="@grid" Name="markers"></RadzenCheckBox>
+                    <RadzenLabel Text="Show Grid" Component="markers" />
                 </RadzenCard>
                 <RadzenChart>
                     <RadzenLineSeries Smooth="smooth" Data="@savings" CategoryProperty="Date" Title="Savings" LineType="LineType.Solid" ValueProperty="Amount">
                         <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
                         <RadzenSeriesDataLabels Visible="@showDataLabels" />
                     </RadzenLineSeries>
+                    <RadzenValueAxis Formatter="@FormatAsPLN">
+                        <RadzenGridLines Visible="@grid" />
+                        <RadzenAxisTitle Text="Revenue in USD" />
+                    </RadzenValueAxis>
                 </RadzenChart>
             </div>
         </div>
@@ -42,6 +49,12 @@ else {
     bool smooth = false;
     bool showDataLabels = false;
     bool showMarkers = false;
+    bool grid = false;
+
+    string FormatAsPLN(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("pl-PL"));
+    }
 
     protected override async Task OnInitializedAsync(){
         savings = await SavingService.GetAllExamples();
