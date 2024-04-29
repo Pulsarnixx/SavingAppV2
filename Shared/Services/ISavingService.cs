@@ -8,11 +8,11 @@ namespace Webapp.Shared.Services
         public Task<SavingEntity> AddExample(SavingEntity saving);
         public Task<List<SavingEntity>> GetByCategory(SavingCategory category);
 
-        // public Task<Example> GetExampleById(int id);
+        public Task<SavingEntity> GetSavingById(int id);
 
-        // public Task<Example> EditExample(int id, Example example);
+        public Task<SavingEntity> EditSaving(int id, SavingEntity saving);
 
-        // public Task<bool> DeleteExample(int id);
+        public Task<bool> DeleteSaving(int id);
         
 
         
