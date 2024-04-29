@@ -2,4 +2,3 @@
 */bin/
 */obj/
 *.session.sql
-*/Migrations/
