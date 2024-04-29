@@ -8,15 +8,12 @@ namespace Webapp.Shared.Data
         public DataContext() { }
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<SavingEntity> Savings => Set<SavingEntity>();
-        public DbSet<SavingType> SavingTypes => Set<SavingType>();
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        modelBuilder.Entity<SavingType>().HasData(
-            new {Id = 1, Name = "Grocery"},
-            new {Id = 2, Name = "Shopping"},
-            new {Id = 3, Name = "Subscriptions"}
+        modelBuilder.Entity<SavingEntity>().HasData(
+            new {Id = 1, Category = SavingCategory.Zakupy, Name = "Bułki", Amount = 12.00m, Date = DateTime.Now},
+            new {Id = 2, Category = SavingCategory.Kosmetyki, Name = "Mydło", Amount = 5.00m, Date = DateTime.Now},
+            new {Id = 3, Category = SavingCategory.Inne, Name = "Plecak", Amount = 1.00m, Date = DateTime.Now}
         );
     }
-
-        public DbSet<Example> Examples { get; set; }
     }
 }

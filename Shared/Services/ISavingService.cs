@@ -5,7 +5,7 @@ namespace Webapp.Shared.Services
     public interface ISavingService
     {
         public Task<List<SavingEntity>> GetAllExamples();
-        // public Task<Example> AddExample(Example example);
+        public Task<SavingEntity> AddExample(SavingEntity saving);
 
         // public Task<Example> GetExampleById(int id);
 

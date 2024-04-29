@@ -12,7 +12,7 @@ using Webapp.Shared.Data;
 namespace Shared.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240429084807_Initial")]
+    [Migration("20240429111545_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,23 +25,6 @@ namespace Shared.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Webapp.Shared.Entities.Example", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Examples");
-                });
-
             modelBuilder.Entity("Webapp.Shared.Entities.SavingEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -51,7 +34,10 @@ namespace Shared.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
@@ -60,59 +46,35 @@ namespace Shared.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("SavingTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SavingTypeId");
 
                     b.ToTable("Savings");
-                });
-
-            modelBuilder.Entity("Webapp.Shared.Entities.SavingType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SavingTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "Grocery"
+                            Amount = 12.00m,
+                            Category = 0,
+                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1530),
+                            Name = "Bułki"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Shopping"
+                            Amount = 5.00m,
+                            Category = 1,
+                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1579),
+                            Name = "Mydło"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Subscriptions"
+                            Amount = 1.00m,
+                            Category = 2,
+                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1582),
+                            Name = "Plecak"
                         });
-                });
-
-            modelBuilder.Entity("Webapp.Shared.Entities.SavingEntity", b =>
-                {
-                    b.HasOne("Webapp.Shared.Entities.SavingType", "SavingType")
-                        .WithMany()
-                        .HasForeignKey("SavingTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SavingType");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,5 @@ builder.Services.AddScoped(http => new HttpClient
 
 
 });
-builder.Services.AddScoped<IExampleService, ClientExampleService>();
 
 await builder.Build().RunAsync();

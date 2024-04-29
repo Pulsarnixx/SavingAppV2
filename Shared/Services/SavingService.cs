@@ -26,5 +26,19 @@ namespace Webapp.Shared.Services
             return savings;
         }
 
+        public async Task<SavingEntity> AddExample(SavingEntity saving)
+        {
+
+            if (string.IsNullOrEmpty(saving.Name) || saving.Amount <= 0 || saving.Date == default)
+            {
+                throw new ArgumentException("Nieprawidłowe dane dla SavingEntity.");
+            }
+            _context.Savings.Add(saving);
+            await _context.SaveChangesAsync();
+
+            return saving;
+        }
+
+
     }
 }
