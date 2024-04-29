@@ -40,9 +40,9 @@ namespace Shared.Migrations
                 columns: new[] { "Id", "Amount", "Category", "Date", "Name" },
                 values: new object[,]
                 {
-                    { 1, 12.00m, 0, new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1530), "Bułki" },
-                    { 2, 5.00m, 1, new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1579), "Mydło" },
-                    { 3, 1.00m, 2, new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1582), "Plecak" }
+                    { 1, 12.00m, 0, new DateTime(2024, 4, 29, 15, 36, 0, 418, DateTimeKind.Local).AddTicks(6860), "Bułki" },
+                    { 2, 5.00m, 1, new DateTime(2024, 4, 29, 16, 6, 0, 418, DateTimeKind.Local).AddTicks(6890), "Mydło" },
+                    { 3, 1.00m, 2, new DateTime(2024, 4, 29, 16, 36, 0, 418, DateTimeKind.Local).AddTicks(6890), "Plecak" }
                 });
         }
 

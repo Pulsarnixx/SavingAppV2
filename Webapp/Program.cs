@@ -3,6 +3,7 @@ using Webapp.Components;
 using Microsoft.EntityFrameworkCore;
 using Webapp.Shared.Data;
 using Webapp.Shared.Services;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddRadzenComponents();
 
 builder.Services.AddControllers();
 
