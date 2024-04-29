@@ -23,7 +23,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddScoped<IExampleService, ExampleService>();
+
+// builder.Services.AddScoped<IExampleService, ExampleService>();
+builder.Services.AddScoped<ISavingService, SavingService>();
 
 var app = builder.Build();
 
@@ -50,5 +52,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Webapp.Client._Imports).Assembly);
+
 
 app.Run();
