@@ -6,7 +6,7 @@
 @rendermode InteractiveAuto
 
 @if(Id == null){    
-    <h3>Create Savings</h3>
+    <h3>Create</h3>
 }
 else{
 
@@ -16,40 +16,64 @@ else{
 
 @* Frontendowa cześć Blazor do tworzenia formularzy, 
    które umożliwiają użytkownikom edycję danych *@
-<EditForm Model="saiving" OnSubmit="HandleSubmit" FormName="SavingForm"> 
+<EditForm FormName="SavingForm" Model="saiving" OnValidSubmit="HandleSubmit"> 
+
+    <DataAnnotationsValidator />
     <div style="margin-bottom: 10px;">
     <label>Name</label> 
     <InputText @bind-Value="saiving.Name">@saiving.Name</InputText>
+    <ValidationMessage For="@(() => saiving.Name)" />
     </div>
 
     <div style="margin-bottom: 10px;">
-    <label>Amount</label> 
+    <label>Category</label> 
+        <InputSelect @bind-Value="saiving.Category">
+            @foreach (var category in Enum.GetValues(typeof(SavingCategory)))
+            {
+                <option value="@category">@category</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => saiving.Category)" />
+    </div>
+
+    <div style="margin-bottom: 10px;">
+    <label>Amount ($)</label> 
     <InputNumber @bind-Value="saiving.Amount">@saiving.Amount</InputNumber>
+    <ValidationMessage For="@(() => saiving.Amount)" />
+
     </div>
 
     <div style="margin-bottom: 10px;">
     <label>Date</label> 
     <InputDate @bind-Value="saiving.Date">@saiving.Date</InputDate>
+    <ValidationMessage For="@(() => saiving.Date)" />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
  
+    @* <ValidationSummary/>     *@
 </EditForm>    
 
+@if(message == "Product added"){
+    <div class="message" style="margin-top: 10px; margin-bottom: 10px">
+        <div class="alert alert-success" role="alert" style="width: 200px; font-size: 14px; padding: 10px;">@message</div>
+    </div>
+}
+
 @code {
+
+    string? message;
+
     [Parameter] 
     public int? Id { get; set; }
-    SavingEntity saiving { get; set; } = new SavingEntity {
-            Name = string.Empty,
-            Category = SavingCategory.Inne,
-            Amount = 0,
-            Date = DateTime.Now
-            };
-
+    SavingEntity saiving { get; set; } = new();
+            
     async Task HandleSubmit()
     {
-        if(Id == null){
-            await SavingService.AddExample(saiving);
-        }  
+
+        await SavingService.AddExample(saiving);
+
+        message = $"Product added";
+
     }
 
  

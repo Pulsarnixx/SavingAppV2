@@ -12,7 +12,7 @@ using Webapp.Shared.Data;
 namespace Shared.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240429111545_Initial")]
+    [Migration("20240429132417_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Shared.Migrations
                             Id = 1,
                             Amount = 12.00m,
                             Category = 0,
-                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1530),
+                            Date = new DateTime(2024, 4, 29, 15, 24, 17, 343, DateTimeKind.Local).AddTicks(3655),
                             Name = "Bułki"
                         },
                         new
@@ -64,7 +64,7 @@ namespace Shared.Migrations
                             Id = 2,
                             Amount = 5.00m,
                             Category = 1,
-                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1579),
+                            Date = new DateTime(2024, 4, 29, 15, 24, 17, 343, DateTimeKind.Local).AddTicks(3707),
                             Name = "Mydło"
                         },
                         new
@@ -72,7 +72,7 @@ namespace Shared.Migrations
                             Id = 3,
                             Amount = 1.00m,
                             Category = 2,
-                            Date = new DateTime(2024, 4, 29, 13, 15, 44, 848, DateTimeKind.Local).AddTicks(1582),
+                            Date = new DateTime(2024, 4, 29, 15, 24, 17, 343, DateTimeKind.Local).AddTicks(3710),
                             Name = "Plecak"
                         });
                 });
