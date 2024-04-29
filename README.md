@@ -9,6 +9,7 @@
 - Pomelo.EntityFrameworkCore.MySql                        8.0.2
 - Microsoft.NET.ILLink.Tasks                              8.0.3
 - Microsoft.NET.Sdk.WebAssembly.Pack                      8.0.3
+- Radzen.Blazor                                           4.30.3
 
 ## Before use
 
