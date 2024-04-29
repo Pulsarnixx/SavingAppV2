@@ -1,0 +1,57 @@
+@page "/edit-saving"
+@page "/edit-saving/{id:int}"
+@using Webapp.Shared.Entities
+@using Webapp.Shared.Services
+@inject ISavingService SavingService
+@rendermode InteractiveAuto
+
+@if(Id == null){    
+    <h3>Create Savings</h3>
+}
+else{
+
+    <h3>Edit @saiving.Name</h3> 
+}
+
+
+@* Frontendowa cześć Blazor do tworzenia formularzy, 
+   które umożliwiają użytkownikom edycję danych *@
+<EditForm Model="saiving" OnSubmit="HandleSubmit" FormName="SavingForm"> 
+    <div style="margin-bottom: 10px;">
+    <label>Name</label> 
+    <InputText @bind-Value="saiving.Name">@saiving.Name</InputText>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+    <label>Amount</label> 
+    <InputNumber @bind-Value="saiving.Amount">@saiving.Amount</InputNumber>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+    <label>Date</label> 
+    <InputDate @bind-Value="saiving.Date">@saiving.Date</InputDate>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+ 
+</EditForm>    
+
+@code {
+    [Parameter] 
+    public int? Id { get; set; }
+    SavingEntity saiving { get; set; } = new SavingEntity {
+            Name = string.Empty,
+            Category = SavingCategory.Inne,
+            Amount = 0,
+            Date = DateTime.Now
+            };
+
+    async Task HandleSubmit()
+    {
+        if(Id == null){
+            await SavingService.AddExample(saiving);
+        }  
+    }
+
+ 
+
+}

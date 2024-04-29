@@ -1,7 +1,52 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@inject ISavingService SavingService
+@attribute [StreamRendering(true)] 
 
-<h1>Hello, world!</h1>
+<PageTitle>Dashboard</PageTitle>
 
-Welcome to your new app.
+<h3>List</h3>
+
+@if(savings is null)
+{
+    <span> Loading... </span>
+}
+else if(savings.Count == 0)
+{
+    <span> No Examples... </span>
+}
+
+else{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var saving in savings)
+        {
+            <tr>
+                <td>@saving.Name</td>
+                <td>@saving.Category</td>
+                <td>@saving.Amount</td>
+                <td>@saving.Date.ToString("dd.MM.yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table> 
+}
+
+<CreateSavingButton/>
+
+
+@code {
+    List<SavingEntity>? savings = null;
+
+    protected override async Task OnInitializedAsync(){
+        savings = await SavingService.GetAllExamples();
+    }
+}
