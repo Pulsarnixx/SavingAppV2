@@ -27,13 +27,13 @@ else{
                 <Template Context="saving">@saving.Date.ToShortDateString()</Template>
 
             </RadzenDataGridColumn>
-             <RadzenDataGridColumn>
+             @* <RadzenDataGridColumn>
                 <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick="EditRow">
                 </RadzenButton>
                 <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" @onclick="DeleteRow">
                 </RadzenButton>
-                <RadzenButton Variant="Variant.Flat" Click="@(args => EditRow(saving))" Text="Primary" ButtonStyle="ButtonStyle.Primary" />
-            </RadzenDataGridColumn>
+                <RadzenButton Variant="Variant.Flat" Click=@EditRow() Text="Primary" ButtonStyle="ButtonStyle.Primary" />
+            </RadzenDataGridColumn> *@
         </Columns>
     </RadzenDataGrid>
 
